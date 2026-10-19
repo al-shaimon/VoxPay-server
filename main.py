@@ -28,10 +28,14 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# Enable CORS for local Vite dev server and production deployments
+# Enable CORS for local Vite dev server and production deployments (including all Vercel domains)
+frontend_url_env = os.getenv("FRONTEND_URL", "").strip()
+allowed_origins = [o.strip() for o in frontend_url_env.split(",") if o.strip()] or ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
+    allow_origin_regex=r"https?://.*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
