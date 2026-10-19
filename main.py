@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
 from database import db_manager
-from routes import wallet, transactions, ml, weather
+from routes import wallet, transactions, ml, weather, tts
 
 load_dotenv()
 
@@ -46,6 +46,7 @@ app.include_router(wallet.router)
 app.include_router(transactions.router)
 app.include_router(ml.router)
 app.include_router(weather.router)
+app.include_router(tts.router)
 
 @app.get("/", tags=["Health"])
 async def root():
